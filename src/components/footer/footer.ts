@@ -9,8 +9,11 @@ const emailInput = document.getElementById(
 const messageEl = document.getElementById(
   'footer-subscription-message'
 ) as HTMLParagraphElement | null;
+const submitBtn = document.querySelector(
+  '.footer__submit'
+) as HTMLButtonElement | null;
 
-if (form && emailInput && messageEl) {
+if (form && emailInput && messageEl && submitBtn) {
   form.addEventListener('submit', async event => {
     event.preventDefault();
     messageEl.textContent = '';
@@ -21,6 +24,10 @@ if (form && emailInput && messageEl) {
     }
 
     const email = emailInput.value.trim();
+
+    submitBtn.disabled = true;
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Sending...';
 
     try {
       await fetchJson('/api/subscription', {
@@ -39,6 +46,9 @@ if (form && emailInput && messageEl) {
       } else {
         messageEl.textContent = 'Something went wrong. Please try again.';
       }
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
     }
   });
 }
