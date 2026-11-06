@@ -30,7 +30,7 @@ if (form && emailInput && messageEl && submitBtn) {
     submitBtn.textContent = 'Sending...';
 
     try {
-      await fetchJson('/api/subscription', {
+      await fetchJson('https://your-energy.b.goit.study/api/subscription', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
